@@ -34,3 +34,13 @@ base:
   'dansullivan':
     - web-frontend-packages
     - s3fs.install-s3fs-rhel7
+  'os:MacOS':
+    - match: grain
+    - macos
+
+dev:
+  '*':
+    - baseline
+  'os:MacOS':
+    - match: grain
+    - macos

@@ -4,8 +4,14 @@
 #    - cwd: /
 #    - stateful: False
 
-openssl:
-  pkg.installed
+#openssl:
+#  pkg.installed
 
-moreutils:
-  pkg.installed
+#moreutils:
+#  pkg.installed
+
+macos-packages:
+  pkg.installed:
+  - pkgs:
+    - openssl
+    - moreutils

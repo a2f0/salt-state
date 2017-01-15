@@ -150,7 +150,7 @@ getcrt:
     - stateful: False
     #- name: sudo su - apache -c "certbot certonly -n --webroot -w /opt/code/devopsrockstars-website/public -d {{ pillar['fqdn'] }} --logs-dir=/opt/certbot/logs --config-dir=/opt/certbot/config --work-dir=/opt/certbot/work --email=webmaster@devopsrockstars.com --agree-tos"
     #- name: certbot certonly -n --webroot -w /opt/code/devopsrockstars-website/public -d {{ pillar['fqdn'] }} --logs-dir=/opt/certbot/logs --config-dir=/opt/certbot/config --work-dir=/opt/certbot/work --email=webmaster@devopsrockstars.com --agree-tos
-    - name: certbot certonly -n --webroot -w /var/www/html -d {{ pillar['fqdn'] }} -d {{ pillar['fqdn2'] }}  --logs-dir=/opt/certbot/logs --config-dir=/opt/certbot/config --work-dir=/opt/certbot/work --email=webmaster@devopsrockstars.com --agree-tos --expand
+    - name: certbot certonly -n --webroot -w /var/www/html -d {{ pillar['fqdn'] }} -d {{ pillar['fqdn2'] }}  --logs-dir=/opt/certbot/logs --config-dir=/opt/certbot/config --work-dir=/opt/certbot/work --email=webmaster@devopsrockstars.com --agree-tos --expand --hsts --post-hook 'apachectl restart'
   
 #sudo su - apache -c "certbot certonly -n --webroot -w /opt/code/devopsrockstars-website/public -d {{ pillar['fqdn'] }} --logs-dir=/opt/certbot/logs --config-dir=/opt/certbot/config --work-dir=/opt/certbot/work --email=webmaster@devopsrockstars.com --agree-tos":
 certbot certonly -n --webroot -w /opt/code/devopsrockstars-website/public -d {{ pillar['fqdn'] }} -d {{ pillar['fqdn2'] }} --logs-dir=/opt/certbot/logs --config-dir=/opt/certbot/config --work-dir=/opt/certbot/work --email=webmaster@devopsrockstars.com --agree-tos --expand:

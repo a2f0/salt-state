@@ -31,12 +31,6 @@ libxml2-devel:
 util-linux:
   pkg.installed
 
-#to mount the bucket via s3fs
-/mnt/{{ pillar['bucketname'] }}:
-  file.directory:
-    - user: root
-    - group: root
-    - makedirs: True
 
 /opt/code/s3fs-fuse:
   file.recurse:
@@ -85,6 +79,13 @@ not-installing-certbot-auto:
   test.nop
 
 {% endif %}
+
+#to mount the bucket via s3fs
+/mnt/{{ pillar['bucketname'] }}:
+  file.directory:
+    - user: root
+    - group: root
+    - makedirs: True
 
 configure-fstab-s3fs:
   file.append:

@@ -1,3 +1,5 @@
+{% if 1 == salt['cmd.retcode']('test -f /usr/local/bin/s3fs') %}
+
 automake:
   pkg.installed
 
@@ -76,6 +78,13 @@ run-make-install-s3fs-fuse:
     - name: make install
     - cwd: /opt/code/s3fs-fuse
     - stateful: false
+
+{% else %}
+
+not-installing-certbot-auto:
+  test.nop
+
+{% endif %}
 
 configure-fstab-s3fs:
   file.append:

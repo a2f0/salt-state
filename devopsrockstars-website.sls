@@ -1,16 +1,16 @@
-clearoldcode:
-  cmd.run:
-    - name: rm -rf /opt/code/devopsrockstars-website
+#clearoldcode:
+#  cmd.run:
+#    - name: rm -rf /opt/code/devopsrockstars-website
 
-/opt/code/devopsrockstars-website:
-  file.recurse:
-    - clean: True
-    - source: {{ pillar['sitesourcepath'] }}
-    - include_empty: True
-    - user: apache
-    - group: apache
-    - exclude_pat: .git/*
-    #- exclude_pat: (.git/*)
+#/opt/code/devopsrockstars-website:
+#  file.recurse:
+#    - clean: True
+#    - source: {{ pillar['sitesourcepath'] }}
+#    - include_empty: True
+#    - user: apache
+#    - group: apache
+#    - exclude_pat: .git/*
+#    #- exclude_pat: (.git/*)
 #"*.git*" appears to work.
 
 #this can probably be removed completely.
@@ -81,36 +81,36 @@ apache:
 #  cmd.run:
 #    - name: ls -lR /usr/local/rbenv
      
-installbundle:
-  cmd.run:
-    - name: su root -l -c "export PATH=/usr/local/rbenv/bin:/usr/local/rbenv/shims:$PATH && export RBENV_ROOT=/usr/local/rbenv && cd /opt/code/devopsrockstars-website && ruby --version && which gem && gem install bundle"
+#installbundle:
+#  cmd.run:
+#    - name: su root -l -c "export PATH=/usr/local/rbenv/bin:/usr/local/rbenv/shims:$PATH && export RBENV_ROOT=/usr/local/rbenv && cd /opt/code/devopsrockstars-website && ruby --version && which gem && gem install bundle"
    
-installgems:
-  cmd.run:
+#installgems:
+#  cmd.run:
     #- name: su apache -c "cd /opt/code/devopsrockstars-website && bundle install --deployment"
     #- name:  su apache -s /bin/bash -l -c "cd /opt/code/devopsrockstars-website && bundle install --deployment"
-    - name:  su apache -s /bin/bash -l -c "ruby --version && export PATH=/usr/local/rbenv/bin:/usr/local/rbenv/shims:$PATH && export RBENV_ROOT=/usr/local/rbenv && cd /opt/code/devopsrockstars-website && bundle install --deployment"
-    - stateful: False
+#    - name:  su apache -s /bin/bash -l -c "ruby --version && export PATH=/usr/local/rbenv/bin:/usr/local/rbenv/shims:$PATH && export RBENV_ROOT=/usr/local/rbenv && cd /opt/code/devopsrockstars-website && bundle install --deployment"
+#    - stateful: False
 
 #su apache -c "cd /opt/code/devopsrockstars-website && bundle exec rake devopsrockstars:updateloans":
-su apache -s /bin/bash -l -c "cd /opt/code/devopsrockstars-website && bundle exec rake devopsrockstars:updateloans":
-  cron.present:
-    - user: root
-    - minute: random
-    - hour: 2
-    - commented: False
+#su apache -s /bin/bash -l -c "cd /opt/code/devopsrockstars-website && bundle exec rake devopsrockstars:updateloans":
+#  cron.present:
+#    - user: root
+#    - minute: random
+#    - hour: 2
+#    - commented: False
 
-clobberassets:
-  cmd.run:
-    - name: su apache -s /bin/bash -l -c "cd /opt/code/devopsrockstars-website && bundle exec rake assets:clobber"
+#clobberassets:
+#  cmd.run:
+#    - name: su apache -s /bin/bash -l -c "cd /opt/code/devopsrockstars-website && bundle exec rake assets:clobber"
 
-cleartempassets:
-  cmd.run:
-    - name: su apache -s /bin/bash -l -c "cd /opt/code/devopsrockstars-website && bundle exec rake tmp:clear"
+#cleartempassets:
+#  cmd.run:
+#    - name: su apache -s /bin/bash -l -c "cd /opt/code/devopsrockstars-website && bundle exec rake tmp:clear"
 
-compileassets:
-  cmd.run:
-    - name: su apache -s /bin/bash -l -c "export RAILS_ENV={{ pillar['environment'] }} && cd /opt/code/devopsrockstars-website && bundle exec rake assets:precompile"
+#compileassets:
+#  cmd.run:
+#    - name: su apache -s /bin/bash -l -c "export RAILS_ENV={{ pillar['environment'] }} && cd /opt/code/devopsrockstars-website && bundle exec rake assets:precompile"
 
 /opt/certbot/:
   file.directory:
@@ -142,7 +142,7 @@ compileassets:
 
 restartapache:
   cmd.run:
-    - name: systemctl restart httpd
+    - name: service httpd restart
     - stateful: False
 
 getcrt:
@@ -150,10 +150,10 @@ getcrt:
     - stateful: False
     #- name: sudo su - apache -c "certbot certonly -n --webroot -w /opt/code/devopsrockstars-website/public -d {{ pillar['fqdn'] }} --logs-dir=/opt/certbot/logs --config-dir=/opt/certbot/config --work-dir=/opt/certbot/work --email=webmaster@devopsrockstars.com --agree-tos"
     #- name: certbot certonly -n --webroot -w /opt/code/devopsrockstars-website/public -d {{ pillar['fqdn'] }} --logs-dir=/opt/certbot/logs --config-dir=/opt/certbot/config --work-dir=/opt/certbot/work --email=webmaster@devopsrockstars.com --agree-tos
-    - name: certbot certonly -n --webroot -w /var/www/html -d {{ pillar['fqdn'] }} -d {{ pillar['fqdn2'] }}  --logs-dir=/opt/certbot/logs --config-dir=/opt/certbot/config --work-dir=/opt/certbot/work --email=webmaster@devopsrockstars.com --agree-tos --expand --hsts --post-hook 'apachectl restart'
+    - name: {{ pillar['certbot_path'] }} certonly -n --webroot -w /var/www/html -d {{ pillar['fqdn'] }} -d {{ pillar['fqdn2'] }}  --logs-dir=/opt/certbot/logs --config-dir=/opt/certbot/config --work-dir=/opt/certbot/work --email=webmaster@devopsrockstars.com --agree-tos --expand --hsts --post-hook 'apachectl restart' --debug
   
 #sudo su - apache -c "certbot certonly -n --webroot -w /opt/code/devopsrockstars-website/public -d {{ pillar['fqdn'] }} --logs-dir=/opt/certbot/logs --config-dir=/opt/certbot/config --work-dir=/opt/certbot/work --email=webmaster@devopsrockstars.com --agree-tos":
-certbot certonly -n --webroot -w /opt/code/devopsrockstars-website/public -d {{ pillar['fqdn'] }} -d {{ pillar['fqdn2'] }} --logs-dir=/opt/certbot/logs --config-dir=/opt/certbot/config --work-dir=/opt/certbot/work --email=webmaster@devopsrockstars.com --agree-tos --expand:
+{{ pillar['certbot_path'] }} certonly -n --webroot -w /opt/code/devopsrockstars-website/public -d {{ pillar['fqdn'] }} -d {{ pillar['fqdn2'] }} --logs-dir=/opt/certbot/logs --config-dir=/opt/certbot/config --work-dir=/opt/certbot/work --email=webmaster@devopsrockstars.com --agree-tos --expand --hsts --post-hook 'apachectl restart' --debug:
   cron.present:
     - user: root
     - minute: random
@@ -187,6 +187,7 @@ certbot certonly -n --webroot -w /opt/code/devopsrockstars-website/public -d {{ 
           DocumentRoot: /opt/code/devopsrockstars-website/public
           #PassengerRuby: /usr/bin/ruby
           PassengerRuby: /usr/local/rbenv/versions/2.3.0/bin/ruby
+          PassengerRoot: /usr/local/rbenv/versions/2.3.0/lib/ruby/gems/2.3.0/gems/passenger-5.1.2
           PassengerMinInstances: 3
           PassengerPreStart: https://{{ pillar['fqdn'] }}
           RailsEnv: {{ pillar['environment'] }}
@@ -196,12 +197,21 @@ certbot certonly -n --webroot -w /opt/code/devopsrockstars-website/public -d {{ 
             - gzip svgz
           Directory:
             this: /opt/code/devopsrockstars-website/public
+            Order:
+              - allow,deny
             Allow from:
               - all
-            Options: 
-              - -MultiViews
             Require:
               - all granted
+            Satisfy:
+              - Any
+            ##double hashbangs were previous
+            ##Allow from:
+            ##  - all
+            ##Options: 
+            ##  - -MultiViews
+            ##Require:
+            ##  - all granted
             #Order: Deny,Allow
             #Deny from: all
             #Allow from:
@@ -232,6 +242,11 @@ certbot certonly -n --webroot -w /opt/code/devopsrockstars-website/public -d {{ 
           #    ForceType: text/javascript
           #    Header: set Content-Encoding gzip
 
+/etc/httpd/conf.d/{{ pillar['fqdn'] }}-passenger.conf:
+  apache.configfile:
+    - config:
+      - LoadModule: 'passenger_module /usr/local/rbenv/versions/2.3.0/lib/ruby/gems/2.3.0/gems/passenger-5.1.2/buildout/apache2/mod_passenger.so'
+
 /etc/httpd/conf.d/{{ pillar['fqdn'] }}-redirect.conf:
   apache.configfile:
     - config:
@@ -241,11 +256,11 @@ certbot certonly -n --webroot -w /opt/code/devopsrockstars-website/public -d {{ 
             - {{ pillar['fqdn'] }}
           ServerAlias:
             - {{ pillar['fqdn2'] }}
-          Redirect: permanent / https://{{ pillar['fqdn2'] }}
+          Redirect: temporary / https://{{ pillar['fqdn2'] }}
           ErrorLog: logs/{{ pillar['fqdn'] }}-redirect-error_log
           CustomLog: logs/{{ pillar['fqdn'] }}-redirect-access_log combined
 
 restartapache-after-installing-ssl:
   cmd.run:
-    - name: systemctl restart httpd
+    - name: service httpd restart
     - stateful: False

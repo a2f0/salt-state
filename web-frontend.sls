@@ -1,8 +1,10 @@
 #https://docs.saltstack.com/en/2015.8/ref/states/all/salt.states.rbenv.html
 #https://docs.saltstack.com/en/latest/ref/modules/all/salt.modules.rbenv.html
 
-mod_passenger:
-  pkg.installed
+#Mod passenger doesn't work with Amazon Linux, this is documented here
+#https://www.phusionpassenger.com/library/install/apache/install/oss/el7/
+#mod_passenger:
+#  pkg.installed
 
 rbenv-deps:
   pkg.installed:

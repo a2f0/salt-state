@@ -8,39 +8,24 @@ base:
     - certbot-restore-and-schedule-backup
     - postgres.pgpass
     - postgres.postgres-server
-    - postgres.backup-database-cron
     - postgres.restore-prod-db
+    - postgres.backup-database-cron
     - web-frontend
+    - deploycode
+    - passenger-amazon-linux
+    - passenger-module
     - devopsrockstars-website
     - paperclip-restore-and-schedule-backup
     - solr.bootstrapsolr
     - set-hostname-rhel7
     - pagespeed
-  'devopsrockstars-test':
-    - web-frontend-packages
-    - mlocate
-    - s3fs.install-s3fs-rhel7
-    - certbot-restore-and-schedule-backup
-    - postgres.pgpass
-    - postgres.postgres-server
-    - postgres.backup-database-cron
-    - postgres.restore-prod-db
-    - web-frontend
-    - devopsrockstars-website
-    - paperclip-restore-and-schedule-backup
-    - solr.bootstrapsolr
-    - set-hostname-rhel7
-    - pagespeed
+    - httpd.default-website
   'dansullivan':
-    - web-frontend-packages
     - s3fs.install-s3fs-rhel7
-  'os:MacOS':
-    - match: grain
-    - macos
-
-dev:
-  '*':
-    - baseline
+    - dansullivan.restore-dokuwiki
+    - httpd.redirect-80-to-443
+    - httpd.default-website
+    - dansullivan.certbot
   'os:MacOS':
     - match: grain
     - macos

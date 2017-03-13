@@ -43,11 +43,6 @@ util-linux:
     - group: root
     - mode: 600
 
-configure-s3fs-fuse-password-file:
-  file.append:
-    - name: /etc/s3fs-password
-    - text: {{ pillar['bucketname'] }}:{{ pillar['awsaccesskey'] }}:{{ pillar['awssecretkey'] }}
-
 run-autogen-s3fs-fuse:
   cmd.run:
     - name: sh ./autogen.sh
@@ -79,6 +74,11 @@ not-installing-certbot-auto:
   test.nop
 
 {% endif %}
+
+configure-s3fs-fuse-password-file:
+  file.append:
+    - name: /etc/s3fs-password
+    - text: {{ pillar['bucketname'] }}:{{ pillar['awsaccesskey'] }}:{{ pillar['awssecretkey'] }}
 
 #to mount the bucket via s3fs
 /mnt/{{ pillar['bucketname'] }}:

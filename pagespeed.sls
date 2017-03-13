@@ -18,5 +18,5 @@ installpagespeed:
 
 bounceapacheafterinstallingpagespeed:
   cmd.run:
-    - name: systemctl restart httpd
+    - name: service httpd restart
     - stateful: False

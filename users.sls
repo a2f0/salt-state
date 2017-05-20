@@ -5,22 +5,22 @@ user_{{user.name}}:
     - name: {{user.name}}
     - gid: {{user.gid}}
 
-user.present:
-  - name: {{user.name}}
-  - fullname: {{user.fullname}}
-  - password: {{user.shadow}}
-  - home: {{user.home}}
-  - shell: {{user.shell}}
-  - uid: {{user.uid}}
-  - gid: {{user.gid}}
-  {% if user.groups %}
-  - optional_groups:
-    {% for group in user.groups %}
-    - {{group}}
-    {% endfor %}
-  {% endif %}
-  - require:
-    - group: user_{{user.name}}
+  user.present:
+    - name: {{user.name}}
+    - fullname: {{user.fullname}}
+    - password: {{user.shadow}}
+    - home: {{user.home}}
+    - shell: {{user.shell}}
+    - uid: {{user.uid}}
+    - gid: {{user.gid}}
+    {% if user.groups %}
+    - optional_groups:
+      {% for group in user.groups %}
+      - {{group}}
+      {% endfor %}
+    {% endif %}
+    - require:
+      - group: user_{{user.name}}
 
   file.directory:
     - name: {{user.home}}
@@ -46,16 +46,6 @@ user_{{user.name}}_authkeys:
   ssh_auth.present:
     - user: {{user.name}}
     - name: {{user.authkey}}
-{% endif %}
-
-{% if 'sshpub' in user %}
-user_{{user.name}}_sshpub:
-  file.managed:
-    - name: {{user.home}}/.ssh/id_rsa.pub
-    - user: {{user.name}}
-    - group: {{user.name}}
-    - mode: 0600
-    - contents_pillar: {{user.sshpub}}
 {% endif %}
 
 {% if 'sshpub' in user %}

@@ -173,9 +173,9 @@ getcrt:
           #above gives this with chrome.
           #XMLHttpRequest cannot load https://d35vew6rpu90ot.cloudfront.net/assets/chicago-star-white-prompt-77760973a991253aa6a663271ed75b810b7371f44521ab6ca098cb035fbde6e2.svg. The 'Access-Control-Allow-Origin' header has a value 'https://d35vew6rpu90ot.cloudfront.net' that is not equal to the supplied origin. Origin 'https://rose.devopsrockstars.com' is therefore not allowed access.
           Header: set Access-Control-Allow-Origin "*"
-          SSLCertificateFile: /opt/certbot/config/live/{{ pillar['fqdn'] }}/cert.pem
-          SSLCertificateKeyFile: /opt/certbot/config/live/{{ pillar['fqdn'] }}/privkey.pem
-          SSLCertificateChainFile: /opt/certbot/config/live/{{ pillar['fqdn'] }}/fullchain.pem
+          SSLCertificateFile: /opt/certbot/config/live/{{ pillar['fqdn2'] }}/cert.pem
+          SSLCertificateKeyFile: /opt/certbot/config/live/{{ pillar['fqdn2'] }}/privkey.pem
+          SSLCertificateChainFile: /opt/certbot/config/live/{{ pillar['fqdn2'] }}/fullchain.pem
           SSLProtocol: all -SSLv2
           SSLCipherSuite: ALL:!ADH:!EXPORT:!SSLv2:RC4+RSA:+HIGH:+MEDIUM:+LOW
           ServerName:
@@ -242,10 +242,10 @@ getcrt:
           #    ForceType: text/javascript
           #    Header: set Content-Encoding gzip
 
-/etc/httpd/conf.d/{{ pillar['fqdn'] }}-passenger.conf:
-  apache.configfile:
-    - config:
-      - LoadModule: 'passenger_module /usr/local/rbenv/versions/2.3.0/lib/ruby/gems/2.3.0/gems/passenger-5.1.2/buildout/apache2/mod_passenger.so'
+#/etc/httpd/conf.d/{{ pillar['fqdn'] }}-passenger.conf:
+#  apache.configfile:
+#    - config:
+#      - LoadModule: 'passenger_module /usr/local/rbenv/versions/2.3.0/lib/ruby/gems/2.3.0/gems/passenger-5.1.2/buildout/apache2/mod_passenger.so'
 
 /etc/httpd/conf.d/{{ pillar['fqdn'] }}-redirect.conf:
   apache.configfile:
@@ -256,7 +256,7 @@ getcrt:
             - {{ pillar['fqdn'] }}
           ServerAlias:
             - {{ pillar['fqdn2'] }}
-          Redirect: temporary / https://{{ pillar['fqdn2'] }}
+          Redirect: / https://{{ pillar['fqdn'] }}
           ErrorLog: logs/{{ pillar['fqdn'] }}-redirect-error_log
           CustomLog: logs/{{ pillar['fqdn'] }}-redirect-access_log combined
 

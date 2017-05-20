@@ -3,21 +3,32 @@
 postgresql92-server:
   pkg.installed
 
-enablepostgresql-server:
-  cmd.run:
-    - name: chkconfig postgresql92 on
-    - stateful: False
+#enablepostgresql-server:
+#  cmd.run:
+#    - name: chkconfig postgresql92 on
+#    - stateful: False
 
 #changed this for Amazon Linux
-initializedbcluster:
-  cmd.run:
+#initializedbcluster:
+#  cmd.run:
 #    - name: postgresql-setup initdb || true
-    - name: service postgresql92 initdb || true
-    - stateful: False
+#    - name: service postgresql92 initdb || true
+#    - stateful: False
+
+
+make-postgres-data-dir:
+  postgres_initdb.present:
+    - name: '/var/lib/pgsql92/data'
+    - auth: trust
+    - user: postgres
+    - password: {{ pillar['pgpass'] }}
+    - encoding: UTF8
+    - runas: postgres
 
 postgresql92:
   service.running:
     - enable: True
+    - reload: True
 
 #this is the user
 devopsrockstars-dbaccess-user:

@@ -11,7 +11,7 @@ base:
     - postgres.restore-prod-db
     - postgres.backup-database-cron
     - web-frontend
-    - deploycode
+    - deploy-code
     - passenger-amazon-linux
     - passenger-module
     - devopsrockstars-website

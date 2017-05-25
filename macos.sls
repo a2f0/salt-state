@@ -15,3 +15,4 @@ macos-packages:
   - pkgs:
     - openssl
     - moreutils
+    - blackbox

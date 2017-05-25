@@ -14,5 +14,9 @@ macos-packages:
   pkg.installed:
   - pkgs:
     - openssl
+    - coreutils
     - moreutils
     - blackbox
+    - rbenv
+    - postgresql
+    - mysql

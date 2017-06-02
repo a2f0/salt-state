@@ -20,3 +20,4 @@ macos-packages:
     - rbenv
     - postgresql
     - mysql
+    - heroku

@@ -21,3 +21,4 @@ macos-packages:
     - postgresql
     - mysql
     - heroku
+    - imagemagick

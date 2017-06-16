@@ -25,6 +25,7 @@ base:
     - dansullivan.dokuwiki
     - dansullivan.vhost-wiki
     - dansullivan.vhost-top
+    - dansullivan.site-top
     - httpd.redirect-80-to-443
     - httpd.default-website
     - dansullivan.certbot

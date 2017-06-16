@@ -1,12 +1,6 @@
 php:
   pkg.installed
 
-/mnt/{{ pillar['bucketname'] }}:
-  file.directory:
-    - user: root
-    - group: root
-    - makedirs: True
-
 /opt/code/dansullivan-website:
   file.directory:
     - user: apache

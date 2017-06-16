@@ -23,7 +23,7 @@ base:
   'dansullivan':
     - s3fs.install-s3fs-rhel7
     - dansullivan.dokuwiki
-    - dansullivan.vhost
+    - dansullivan.vhost-wiki
     - httpd.redirect-80-to-443
     - httpd.default-website
     - dansullivan.certbot

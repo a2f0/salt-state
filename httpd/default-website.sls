@@ -3,5 +3,5 @@
   apache.configfile:
     - config:
       - VirtualHost:
-          this: '_default_:*'
+          this: '_default_:80'
           DocumentRoot: /var/www/html

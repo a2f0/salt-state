@@ -1,18 +1,8 @@
-#customuptime:
-#  cmd.run:
-#    - name: /usr/bin/uptime
-#    - cwd: /
-#    - stateful: False
-
-#openssl:
-#  pkg.installed
-
-#moreutils:
-#  pkg.installed
-
+#brew packages
 macos-packages:
   pkg.installed:
   - pkgs:
+    - node
     - openssl
     - coreutils
     - moreutils
@@ -20,5 +10,4 @@ macos-packages:
     - rbenv
     - postgresql
     - mysql
-    - heroku
     - imagemagick

@@ -1,6 +1,10 @@
+include:
+  - pre-user-changes
+
 {% for user in pillar['users'] %}
 
 user_{{user.name}}:
+
   group.present:
     - name: {{user.name}}
     - gid: {{user.gid}}
@@ -21,6 +25,7 @@ user_{{user.name}}:
     {% endif %}
     - require:
       - group: user_{{user.name}}
+      - sls: pre-user-changes
 
   file.directory:
     - name: {{user.home}}
@@ -33,6 +38,14 @@ user_{{user.name}}_forward:
   file.append:
     - name: {{user.home}}/.forward
     - text: {{user.email}}
+
+{% if user.name is defined %}
+user_{{user.name}}_noop-pre-is-defined:
+  test.succeed_without_changes
+{% else %}
+user_{{user.name}}_noop-pre-not-defined:
+  test.succeed_without_changes
+{% endif %}
 
 user_{{user.name}}_sshdir:
   file.directory:

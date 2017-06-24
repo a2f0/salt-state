@@ -47,6 +47,11 @@ user_{{user.name}}_noop-pre-not-defined:
   test.succeed_without_changes
 {% endif %}
 
+{% if user.name == "apache"  %}
+this-is-apache:
+  test.succeed_without_changes
+{% endif %}
+
 user_{{user.name}}_sshdir:
   file.directory:
     - name: {{user.home}}/.ssh

@@ -1,11 +1,5 @@
-customuptime:
-  cmd.run:
-    - name: /usr/bin/uptime
-    - cwd: /
-    - stateful: False
-
-#verifysudoworks:
-#  cmd.run:
-#    - name: sudo /usr/bin/uptime
-#    - cwd: /
-#    - stateful: False
+/opt/code:
+  file.directory:
+    - user: root
+    - group: root
+    - dir_mode: 755

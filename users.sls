@@ -1,5 +1,8 @@
 include:
-  - pre-user-changes
+  #- pre-user-changes
+  #- httpd.stop-for-modifying-apache-user
+  - httpd.running
+  - httpd.dead
 
 {% for user in pillar['users'] %}
 
@@ -25,7 +28,13 @@ user_{{user.name}}:
     {% endif %}
     - require:
       - group: user_{{user.name}}
-      - sls: pre-user-changes
+    #  - sls: pre-user-changes
+    {% if user.name == "apache"  %}
+    - prereq_in:
+      - service: httpd-dead-user-change
+    - onchanges_in:
+      - service: httpd-running
+    {% endif %}
 
   file.directory:
     - name: {{user.home}}

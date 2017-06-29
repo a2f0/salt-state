@@ -13,27 +13,29 @@ ruby-2.3.0:
     - user: apache
     - require:
       - pkg: rbenv-deps
+      - file: create-rbenv-profile
+      - file: configure-rbenv-path
+      - file: export-rbenv-root
+      - file: init-rbenv-profile
+    - onchanges_in:
+      - gem: bundle
 
-create-rbenv-global-profile:
+create-rbenv-profile:
   file.managed:
     - name: /home/apache/.profile
     - user: apache
     - group: apache
     - mode: 660
 
-configure-rbenv-profile:
+configure-rbenv-path:
   file.append:
     - name: /home/apache/.profile
     - text: export PATH="~/.rbenv/bin:$PATH"
-    - require:
-      - rbenv: ruby-2.3.0
 
-export-rbenv-profile:
+export-rbenv-root:
   file.append:
     - name: /home/apache/.profile
     - text: export RBENV_ROOT=~/.rbenv
-    - require:
-      - rbenv: ruby-2.3.0
 
 init-rbenv-profile:
   file.append:

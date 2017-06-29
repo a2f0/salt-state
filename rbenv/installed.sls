@@ -25,8 +25,24 @@ configure-rbenv-profile:
   file.append:
     - name: /home/apache/.profile
     - text: export PATH="~/.rbenv/bin:$PATH"
+    - require:
+      - rbenv: ruby-2.3.0
 
-export-rbenv-global-profile:
+export-rbenv-profile:
   file.append:
     - name: /home/apache/.profile
     - text: export RBENV_ROOT=~/.rbenv
+    - require:
+      - rbenv: ruby-2.3.0
+
+init-rbenv-profile:
+  file.append:
+    - name: /home/apache/.profile
+    - text: eval "$(rbenv init -)"
+
+bundle:
+  gem.installed:
+    - user: apache
+    - ruby: 2.3.0
+    - require:
+      - rbenv: ruby-2.3.0

@@ -29,4 +29,4 @@ configure-rbenv-profile:
 export-rbenv-global-profile:
   file.append:
     - name: /home/apache/.profile
-    - text: export RBENV_ROOT=~/.rbenv/bin
+    - text: export RBENV_ROOT=~/.rbenv

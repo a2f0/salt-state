@@ -1,15 +1,18 @@
+
+
+
 #clearoldcode:
 #  cmd.run:
 #    - name: rm -rf /opt/code/devopsrockstars-website
 
-/opt/code/devopsrockstars-website:
-  file.recurse:
-    - clean: False
-    - source: {{ pillar['sitesourcepath'] }}
-    - include_empty: True
-    - user: apache
-    - group: apache
-    - exclude_pat: .git/*
+#/opt/code/devopsrockstars-website:
+#  file.recurse:
+#    - clean: False
+#    - source: {{ pillar['sitesourcepath'] }}
+#    - include_empty: True
+#    - user: apache
+#    - group: apache
+#    - exclude_pat: .git/*
     #- exclude_pat: (.git/*)
 #"*.git*" appears to work.
 

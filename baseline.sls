@@ -1,3 +1,6 @@
+file:
+  pkg.installed
+
 /opt/code:
   file.directory:
     - user: root

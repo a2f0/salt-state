@@ -3,6 +3,7 @@ include:
   - httpd.installed
   - git.installed
   - users
+  - rbenv.installed
 
 github.com:
   ssh_known_hosts:
@@ -26,5 +27,6 @@ devopsrockstars-code:
     - user: apache
     - require:
       - file: /opt/code/devopsrocktars.com
+      - rbenv: ruby-2.3.0
       - pkg: git
       - ssh_known_hosts: github.com

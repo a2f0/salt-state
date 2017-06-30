@@ -6,6 +6,7 @@ passenger-deps:
     - names:
       - httpd-devel
       - libcurl-devel
+      - gcc-c++
 
 passenger:
   gem.installed:

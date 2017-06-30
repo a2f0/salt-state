@@ -4,6 +4,7 @@ include:
   - git.installed
   - users
   - rbenv.installed
+  - passenger.installed
 
 github.com:
   ssh_known_hosts:

@@ -42,6 +42,18 @@ init-rbenv-profile:
     - name: /home/apache/.profile
     - text: eval "$(rbenv init -)"
 
+create-gemrc:
+  file.managed:
+    - name: /home/apache/.gemrc
+    - user: apache
+    - group: apache
+    - mode: 660
+
+add-no-document-to-gemrc:
+  file.append:
+    - name: /home/apache/.gemrc
+    - text: 'gem: --no-document'
+
 bundle:
   gem.installed:
     - user: apache

@@ -1,4 +1,7 @@
-{% if 1 == salt['cmd.retcode']('test -f /usr/local/bin/s3fs') %}
+{% if 1 == salt['cmd.retcode']('test -x /usr/local/bin/s3fs') %}
+
+include:
+  - git.installed
 
 s3fs-deps:
   pkg.installed:
@@ -6,14 +9,19 @@ s3fs-deps:
       - automake
       - fuse
       - fuse-devel
+      - gcc-c++
       - libcurl
+      - libcurl-devel
       - libxml2
       - libxml2-devel
+      - openssl-devel
 
 s3fs-code:
   git.latest:
     - name: https://github.com/s3fs-fuse/s3fs-fuse.git
     - target: /opt/code/s3fs-fuse
+    - require:
+      - pkg: git
 
 run-autogen-s3fs-fuse:
   cmd.run:
@@ -40,5 +48,10 @@ run-make-install-s3fs-fuse:
     - name: make install
     - cwd: /opt/code/s3fs-fuse
     - stateful: false
+
+{% else %}
+
+not-installing-s3fs-already-installed:
+  test.nop
 
 {% endif %}

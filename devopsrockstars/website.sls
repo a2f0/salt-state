@@ -5,6 +5,7 @@ include:
   - users
   - rbenv.installed
   - passenger.installed
+  - s3fs.install
 
 github.com:
   ssh_known_hosts:

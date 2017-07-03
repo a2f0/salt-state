@@ -90,15 +90,13 @@ user_{{user.name}}_awscredentials:
     - group: {{user.name}}
     - mode: 600
 
-user_{{user.name}}_aws_access_key:
+user_{{user.name}}_aws_credentials:
   file.append:
     - name: {{user.home}}/.aws/credentials
-    - text: AWS_ACCESS_KEY_ID={{user.aws.accesskey}}
-
-user_{{user.name}}_aws_secret_access_key:
-  file.append:
-    - name: {{user.home}}/.aws/credentials
-    - text: AWS_SECRET_ACCESS_KEY={{user.aws.secretaccesskey}}
+    - text:
+      - '[default]'
+      - aws_access_key_id={{user.aws.accesskey}}
+      - aws_secret_access_key={{user.aws.secretaccesskey}}
 
 {% endif %}
 

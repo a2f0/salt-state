@@ -5,14 +5,7 @@ include:
   - users
   - rbenv.installed
   - passenger.installed
-  - s3fs.install
-
-github.com:
-  ssh_known_hosts:
-    - present
-    - user: apache
-    - enc: rsa
-    - fingerprint: 16:27:ac:a5:76:28:2d:36:63:1b:56:4d:eb:df:a6:48
+  - git.github-known-host
 
 /opt/code/devopsrocktars.com:
   file.directory:

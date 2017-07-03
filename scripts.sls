@@ -5,17 +5,17 @@ include:
 
 /opt/code/scripts:
   file.directory:
-    - user: apache
-    - group: apache
-    - dir_mode: 750
+    - user: dps
+    - group: dps
+    - dir_mode: 755
     - require:
       - file: /opt/code
-      - user: apache
+      - user: dps
 
 deploy-scripts:
   git.latest:
-    - name: git@github.com:deepeeess/scripts.git
+    - name: https://github.com/deepeeess/scripts.git
     - target: /opt/code/scripts
-    - user: apache
+    - user: dps
     - require:
-      - ssh_known_hosts: github.com
+      - user: dps

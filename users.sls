@@ -48,19 +48,6 @@ user_{{user.name}}_forward:
     - name: {{user.home}}/.forward
     - text: {{user.email}}
 
-{% if user.name is defined %}
-user_{{user.name}}_noop-pre-is-defined:
-  test.succeed_without_changes
-{% else %}
-user_{{user.name}}_noop-pre-not-defined:
-  test.succeed_without_changes
-{% endif %}
-
-{% if user.name == "apache"  %}
-this-is-apache:
-  test.succeed_without_changes
-{% endif %}
-
 user_{{user.name}}_sshdir:
   file.directory:
     - name: {{user.home}}/.ssh
@@ -73,6 +60,18 @@ user_{{user.name}}_authkeys:
   ssh_auth.present:
     - user: {{user.name}}
     - name: {{user.authkey}}
+{% endif %}
+
+{% if 'known_hosts' in user %}
+  {% for known_host in user.known_hosts %}
+known_host_{{user.name}}_{{loop.index0}}:
+  ssh_known_hosts:
+    - name: {{ known_host.name }}
+    - present
+    - user: {{user.name}}
+    - enc: rsa
+    - fingerprint: {{ known_host.fingerprint }}
+  {% endfor %}
 {% endif %}
 
 {% if 'sshpub' in user %}

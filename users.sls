@@ -74,6 +74,34 @@ known_host_{{user.name}}_{{loop.index0}}:
   {% endfor %}
 {% endif %}
 
+{% if 'aws' in user %}
+
+user_{{user.name}}_awsdir:
+  file.directory:
+    - name: {{user.home}}/.aws
+    - user: {{user.name}}
+    - group: {{user.name}}
+    - mode: 0700
+
+user_{{user.name}}_awscredentials:
+  file.managed:
+    - name: {{user.home}}/.aws/credentials
+    - user: {{user.name}}
+    - group: {{user.name}}
+    - mode: 600
+
+user_{{user.name}}_aws_access_key:
+  file.append:
+    - name: {{user.home}}/.aws/credentials
+    - text: AWS_ACCESS_KEY_ID={{user.aws.accesskey}}
+
+user_{{user.name}}_aws_secret_access_key:
+  file.append:
+    - name: {{user.home}}/.aws/credentials
+    - text: AWS_SECRET_ACCESS_KEY={{user.aws.secretaccesskey}}
+
+{% endif %}
+
 {% if 'sshpub' in user %}
 user_{{user.name}}_sshpub:
   file.managed:

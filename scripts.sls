@@ -1,5 +1,4 @@
 include:
-  - git.github-known-host
   - baseline
   - users
 
@@ -12,6 +11,11 @@ include:
       - file: /opt/code
       - user: dps
 
+source-aliases-profile:
+  file.append:
+    - name: /etc/profile
+    - text: source /opt/code/scripts/aliases
+
 deploy-scripts:
   git.latest:
     - name: https://github.com/deepeeess/scripts.git
@@ -19,3 +23,5 @@ deploy-scripts:
     - user: dps
     - require:
       - user: dps
+      - file: /opt/code/scripts
+      - file: source-aliases-profile

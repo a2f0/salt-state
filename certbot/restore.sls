@@ -1,6 +1,7 @@
 include:
   - baseline
   - users
+  - scripts
   
 /opt/certbot:
   file.directory:
@@ -12,7 +13,10 @@ include:
 
 restore-certbot:
   cmd.run:
-    - name: echo "directory empty"
+    - name: bash -il -c 'restore-certbot'
     - onlyif: test -z "$(ls -A /opt/certbot/*)"
+    - shell: /bin/bash
     - require:
       - user: root
+      - file: /opt/certbot
+      - git: deploy-scripts

@@ -1,14 +1,17 @@
 {% if 1 == salt['cmd.retcode']('test -f /usr/local/bin/certbot-auto') %}
 
-install-certbot-auto:
-  cmd.run:
-    - name: curl -O https://dl.eff.org/certbot-auto -o /usr/local/bin/certbot-auto && chmod +x /usr/local/bin/certbot-auto && ls -l /usr/local/bin/certbot-auto
-    - cwd: /
-    - stateful: False
+/usr/local/bin/certbot-auto:
+  file.managed:
+    - name: /usr/local/bin/certbot-auto
+    - user: root
+    - group: root
+    - mode: 750
+    - source: https://dl.eff.org/certbot-auto
+    - skip_verify: True
 
 {% else %}
 
-not-installing-certbot-auto:
+certbot-already-installed:
   test.nop
 
 {% endif %}

@@ -2,21 +2,16 @@ include:
   - httpd.installed
   - users
 
-#apache-user-present:
-#  user.present:
-#    - name: apache
-#    - home: /home/apache
-#    - prereq_in:
-#      - service: httpd-stopped-user-change
-#    #  - cmd: wait-for-passenger
-
 httpd-running:
   service.running:
     - name: httpd
     - require:
       - user: apache
-#    - onchanges:
-#      - user: apache
+      - pkg: httpd
+    - watch:
+      - apache: /etc/httpd/conf.d/00-default.conf
+      - apache: /etc/httpd/conf.d/name-based-virtual-hosting-80.conf
+      - apache: /etc/httpd/conf.d/name-based-virtual-hosting-443.conf
 
 #httpd-dead-user-change:
 #  service.dead:

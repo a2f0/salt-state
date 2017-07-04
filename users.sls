@@ -20,7 +20,7 @@ user_{{user.name}}:
     - shell: {{user.shell}}
     - uid: {{user.uid}}
     - gid: {{user.gid}}
-    {% if user.groups %}
+    {% if 'groups' in user %}
     - optional_groups:
       {% for group in user.groups %}
       - {{group}}
@@ -43,10 +43,14 @@ user_{{user.name}}:
     - mode: 0750
     - makedirs: True
 
+{% if 'email' in user %}
+
 user_{{user.name}}_forward:
   file.append:
     - name: {{user.home}}/.forward
     - text: {{user.email}}
+
+{% endif %}
 
 user_{{user.name}}_sshdir:
   file.directory:
@@ -74,6 +78,8 @@ known_host_{{user.name}}_{{loop.index0}}:
   {% endfor %}
 {% endif %}
 
+{% if 'email' in user %}
+
 user_{{user.name}}_gitconfig_email:
   git.config_set:
     - user: {{user.name}}
@@ -94,6 +100,8 @@ user_{{user.name}}_gitconfig_pullrebase:
     - global: True
     - name: pull.rebase
     - value: true
+
+{% endif %}
 
 {% if 'aws' in user %}
 

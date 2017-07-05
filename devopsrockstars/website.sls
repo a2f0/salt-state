@@ -5,7 +5,7 @@ include:
   - users
   - rbenv.installed
   - passenger.installed
-  - git.github-known-host
+  - devopsrockstars.figaro
 
 /opt/code/devopsrockstars.com:
   file.directory:

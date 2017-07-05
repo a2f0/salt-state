@@ -1,3 +1,6 @@
+include:
+  - devopsrockstars.website
+
 /opt/code/devopsrockstars.com/config/application.yml:
     file.serialize:
       - dataset:
@@ -11,3 +14,5 @@
       - user: apache
       - group: apache
       - mode: 640
+      - require:
+        - git: devopsrockstars-code

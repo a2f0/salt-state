@@ -12,6 +12,7 @@ httpd-running:
       - apache: /etc/httpd/conf.d/00-default.conf
       - apache: /etc/httpd/conf.d/name-based-virtual-hosting-80.conf
       - apache: /etc/httpd/conf.d/name-based-virtual-hosting-443.conf
+      - file: /opt/code/devopsrockstars.com/config/application.yml
 
 #httpd-dead-user-change:
 #  service.dead:

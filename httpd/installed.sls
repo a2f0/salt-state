@@ -6,5 +6,8 @@ include:
 
 httpd:
   pkg.installed:
+    - names:
+      - httpd
+      - mod_ssl
     - require:
       - user: apache

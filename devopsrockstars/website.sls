@@ -28,6 +28,7 @@ devopsrockstars-code:
       - ssh_known_hosts: github.com
     - onchanges_in:
       - cmd: bundle-install
+      - cmd: restart-passenger-app
 
 devopsrockstars-gemfile-deps:
   pkg.installed:
@@ -45,5 +46,3 @@ bundle-install:
       - git: devopsrockstars-code
       - rbenv: ruby-2.3.0
       - pkg: devopsrockstars-gemfile-deps
-    - onchanges:
-      - git: devopsrockstars-code

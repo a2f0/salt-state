@@ -5,9 +5,10 @@ include:
   - users
   - rbenv.installed
   - passenger.installed
-  - devopsrockstars.figaro
   - nodejs.installed
-
+  - devopsrockstars.restore-assets
+  - devopsrockstars.figaro
+  - httpd.running
 
 /opt/code/devopsrockstars.com:
   file.directory:

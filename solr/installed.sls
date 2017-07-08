@@ -1,3 +1,9 @@
+rbenv-deps:
+  pkg.installed:
+    - names:
+      - java-1.7.0-openjdk
+      - nc
+
 create-solr-dir:
   file.directory:
     - name: /opt/local/solr-4.9.1
@@ -11,3 +17,10 @@ extract_solr:
     - user: root
     - skip_verify: True
     - onlyif: test -z "$(ls -A /opt/local/solr-4.9.1/*)"
+
+solr-running:
+  cmd.run:
+    - name: nohup java -DSTOP.PORT=8984 -DSTOP.KEY=mysecret -jar /opt/local/solr-4.9.1/example/start.jar > /var/log/solr.log 2>&1 &
+    - cwd: /opt/local/solr-4.9.1/example
+    - unless: nc localhost 8983 < /dev/null
+  

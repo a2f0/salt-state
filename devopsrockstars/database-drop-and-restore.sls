@@ -1,6 +1,6 @@
 include:
   - httpd.dead
-  - devopsrockstars.database-restore
+  - devopsrockstars.database
 
 devopsrockstars-drop-db:
   postgres_database.absent:

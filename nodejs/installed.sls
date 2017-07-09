@@ -7,7 +7,7 @@ include:
 install-node:
   cmd:
     - run
-    - name: yum install nodejs npm --enablerepo=epel
+    - name: yum install nodejs npm --enablerepo=epel -y
     - unless: test -f /usr/bin/node
     - require:
       - sls: epel.install

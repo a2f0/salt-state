@@ -2,6 +2,8 @@ include:
   - baseline
   - users
   - scripts
+  - certbot.installed
+  - aws.installed
   
 /opt/certbot:
   file.directory:
@@ -17,6 +19,8 @@ restore-certbot:
     - onlyif: test -z "$(ls -A /opt/certbot/*)"
     - shell: /bin/bash
     - require:
+      - sls: aws.installed
       - user: root
       - file: /opt/certbot
       - git: deploy-scripts
+    - timeout: 60

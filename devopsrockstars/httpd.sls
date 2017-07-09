@@ -1,8 +1,13 @@
 include:
   - passenger.httpd-module
+  - passenger.httpd-defaultruby
+  - certbot.restore
 
 /etc/httpd/conf.d/{{ pillar['fqdn'] }}-ssl.conf:
   apache.configfile:
+    - require:
+      - sls: passenger.httpd-module
+      - sls: passenger.httpd-defaultruby
     - config:
       - VirtualHost:
           this: '*:443'

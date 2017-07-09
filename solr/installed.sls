@@ -1,4 +1,4 @@
-rbenv-deps:
+solr-deps:
   pkg.installed:
     - names:
       - java-1.7.0-openjdk
@@ -8,19 +8,22 @@ create-solr-dir:
   file.directory:
     - name: /opt/local/solr-4.9.1
     - user: root
-    - mode: 700
+    - mode: 755
+    - makedirs: True
 
-extract_solr:
+download-tarball:
+  file.managed:
+    - name: /tmp/solr-4.9.1.tgz
+    - source: https://archive.apache.org/dist/lucene/solr/4.9.1/solr-4.9.1.tgz
+    - skip_verify: True
+    - user: root
+
+#downloading and extracting because had problems doing archive.extracted from https
+extract-solr:
   archive.extracted:
     - name: /opt/local
-    - source: https://archive.apache.org/dist/lucene/solr/4.9.1/solr-4.9.1.tgz
+    - source: /tmp/solr-4.9.1.tgz
     - user: root
-    - skip_verify: True
     - onlyif: test -z "$(ls -A /opt/local/solr-4.9.1/*)"
-
-solr-running:
-  cmd.run:
-    - name: nohup java -DSTOP.PORT=8984 -DSTOP.KEY=mysecret -jar /opt/local/solr-4.9.1/example/start.jar > /var/log/solr.log 2>&1 &
-    - cwd: /opt/local/solr-4.9.1/example
-    - unless: nc localhost 8983 < /dev/null
-  
+    - require:
+      - file: create-solr-dir

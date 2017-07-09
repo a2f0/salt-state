@@ -14,7 +14,7 @@ certbot-deps:
     - mode: 750
     - source: https://dl.eff.org/certbot-auto
     - skip_verify: True
-    - require
+    - require:
       - pkg: certbot-deps
 
 {% else %}

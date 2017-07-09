@@ -2,6 +2,7 @@ include:
   - aws.installed
   - users
   - postgres.installed
+  - scripts
 
 devopsrockstars-create-db:
   postgres_database.present:
@@ -31,12 +32,14 @@ devopsrockstars-postgres-user:
 
 stage-db-from-s3:
   cmd.run:
-    - name: bash -il -c 'stage-devopsrockstars-prod'
+    - name: /opt/code/scripts/stage-mostrecent-from-s3.sh devopsrockstars-web-backup devopsrockstars-postgres
     - require:
       - pkg: aws-cli
-      - user: root
+      - git: deploy-scripts
+      - sls: users
     - onchanges_in:
       - cmd: restore-production-devopsrockstars-db
+    - timeout: 60
 
 restore-production-devopsrockstars-db:
   cmd.run:
@@ -45,6 +48,7 @@ restore-production-devopsrockstars-db:
     - runas: {{ pillar['pg_system_user'] }}
     - require:
       - postgres_database: devopsrockstars-create-db
+    - timeout: 60
 
 #revoke it afterwards
 #devopsrockstars-dbaccess-revoke-superuser:

@@ -1,12 +1,10 @@
-include:
-  - users
-
 httpd-dead-user-change:
   service.dead:
     - name: httpd
-    - prereq:
-      - user: apache
-    - sig: 'Passenger'
+#   - prereq:
+#      - file: clean-existing-website
+#      - user: apache
+#    - sig: 'Passenger'
     - onchanges_in:
       - cmd: wait-for-passenger
 

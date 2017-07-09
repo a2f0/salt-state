@@ -1,3 +1,5 @@
+{% if pillar['users'] is defined %}
+
 {% for user in pillar['users'] %}
 
 user_{{user.name}}:
@@ -140,3 +142,10 @@ user_{{user.name}}_sshpriv:
 {% endif %}
 
 {% endfor %} # user in users
+
+{% else %}
+
+users-undefined:
+  test.nop
+
+{% endif %} # end check for existence of users pillar

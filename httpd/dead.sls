@@ -12,4 +12,4 @@ wait-for-passenger:
   cmd.run:
     - name: while pgrep -u apache > /dev/null; do sleep 1; done
     - prereq:
-      - user: apache
+      - sls: users

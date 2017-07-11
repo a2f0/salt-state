@@ -4,12 +4,11 @@ include:
 
 /opt/code/scripts:
   file.directory:
-    - user: dps
-    - group: dps
+    - user: {{ pillar['whoami'] }}
     - dir_mode: 755
-    - require:
+    - require: 
       - file: /opt/code
-      - user: dps
+      - sls: users
 
 source-aliases-profile:
   file.append:
@@ -20,8 +19,8 @@ deploy-scripts:
   git.latest:
     - name: https://github.com/deepeeess/scripts.git
     - target: /opt/code/scripts
-    - user: dps
+    - user: {{ pillar['whoami'] }}
     - require:
-      - user: dps
+      - sls: users
       - file: /opt/code/scripts
       - file: source-aliases-profile

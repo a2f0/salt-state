@@ -1,8 +1,12 @@
+{% if grains['os'] == 'Amazon' %}
+
 solr-deps:
   pkg.installed:
     - names:
       - java-1.7.0-openjdk
       - nc
+
+{% endif %}
 
 create-solr-dir:
   file.directory:

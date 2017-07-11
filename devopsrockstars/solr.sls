@@ -4,7 +4,6 @@ include:
 /opt/local/solr-4.9.1/example/solr/devopsrockstars/conf:
   file.directory:
     - user: root
-    - group: root
     - makedirs: True
     - dir_mode: 755
 
@@ -37,6 +36,6 @@ delete-core:
 create-core:
     cmd.run:
     - require:
-      - cmd: delete-core 
+      - cmd: delete-core
     - name: curl -L -X GET 'http://localhost:8983/solr/admin/cores?action=CREATE&name=devopsrockstars&instanceDir=/opt/local/solr-4.9.1/example/solr/devopsrockstars&config=solrconfig.xml&schema=schema.xml&dataDir=data'
     - unless: curl -s -L -X GET 'http://localhost:8983/solr/admin/cores?action=STATUS&core=devopsrockstars' | grep -q dataDir

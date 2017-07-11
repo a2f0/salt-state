@@ -1,3 +1,5 @@
+{% if grains['os'] == 'Amazon' %}
+
 include:
   - postgres.pgpass
 
@@ -5,6 +7,7 @@ postgresql92-server:
   pkg.installed
 
 #doesn't exist in amazonlinux docker image
+#needed for rc file
 /etc/sysconfig/network:
   file.managed:
      - user: root
@@ -58,3 +61,16 @@ postgresql-running:
     - watch:
       - file: /var/lib/pgsql92/data/pg_hba.conf
       - file: /var/lib/pgsql92/data/postgresql.conf
+
+{% elif grains['os'] == 'MacOS' %}
+
+postgresql:
+  pkg.installed
+
+start-server:
+  cmd.run:
+    - name: brew services start postgresql
+    - unless: brew services list | grep started | grep postgresql -q 
+
+{% endif %}
+
